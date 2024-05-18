@@ -1,0 +1,22 @@
+.education-container {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    margin: 0 50px;
+    margin-bottom: 50px;
+}
+  
+.text-container {
+    text-align: left;
+    margin-right: 50px;
+    font-size: 17px;
+}
+
+.bold {
+    font-weight: bold;
+  }
+  
+.univ_icon {
+    width: 170px;
+    height: auto;
+}
