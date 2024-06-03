@@ -5,57 +5,51 @@ import Introduction from './components/Introduction';
 import WritingPage from './components/WritingPage';
 import WritingListPage from './components/WritingListPage';
 import WritingDetail from './components/WritingDetail';
+import Sign from './components/Sign';
+import { getCookie, removeCookie } from './Cookies';
 
 function App() {
-  const [writings, setWritings] = useState([]);
-  const [currentPost, setCurrentPost] = useState(null);
+  const isAuthenticated = !!getCookie("token");
+  const [currentPost, setCurrentPost] = useState(null); // Define setCurrentPost state
 
-  const handleNewPost = (newPost) => {
-    setWritings([...writings, { id: writings.length + 1, ...newPost }]);
-  };
-
-  const handleUpdatePost = (updatedPost) => {
-    const updatedWritings = writings.map(post => (post.id === updatedPost.id ? updatedPost : post));
-    setWritings(updatedWritings);
-  };
-
-  const handleDeletePost = (postId) => {
-    const updatedWritings = writings.filter(post => post.id !== postId);
-    setWritings(updatedWritings);
-  };
-
-  const handleEditPost = (post) => {
-    setCurrentPost(post);
+  const handleAuthClick = (event) => {
+    event.preventDefault();
+    if (isAuthenticated) {
+      removeCookie("token");
+    }
+    window.location.href = '/login'; // 페이지 이동
   };
 
   return (
-    <Router>
-      <div className="App">
-        <header className="App-header">
-          <nav>
-            <ul className="nav-links">
-              <li>
-                <Link to="/" className="nav-link">👩🏻‍💻</Link>
-              </li>
-              <li>
-                <Link to="/writing" className="nav-link" onClick={() => setCurrentPost(null)}>📃</Link>
-              </li>
-              <li>
-                <Link to="/postlist" className="nav-link">📚</Link>
-              </li>
-            </ul>
-          </nav>
-        </header>
-        <div className="content">
-          <Routes>
-            <Route path="/" element={<Introduction />} />
-            <Route path="/writing" element={<WritingPage onAdd={handleNewPost} onUpdate={handleUpdatePost} currentPost={currentPost} />} />
-            <Route path="/postlist" element={<WritingListPage writings={writings} onDelete={handleDeletePost} onEdit={handleEditPost} />} />
-            <Route path="/post/:id" element={<WritingDetail writings={writings} />} />
-          </Routes>
-        </div>
+    <div className="App">
+      <header className="App-header">
+        <nav>
+          <ul className="nav-links">
+            <li>
+              <Link to={isAuthenticated ? "/" : "/login"} onClick={handleAuthClick} className="nav-link">
+                {isAuthenticated ? '🔓' : '🔐'}
+              </Link>
+            </li>
+            <li>
+              <Link to="/" className="nav-link">👩🏻‍💻</Link>
+            </li>
+            <li>
+              <Link to="/writing" className="nav-link" onClick={() => setCurrentPost(null)}>📃</Link>
+            </li>
+            <li>
+              <Link to="/postlist" className="nav-link">📚</Link>
+            </li>
+          </ul>
+        </nav>
+      </header>
+      <div className="content">
+        <Routes>
+          <Route path="/login" element={<Sign />} />
+          <Route path="/" element={<Introduction />} />
+          {/* Add other routes here */}
+        </Routes>
       </div>
-    </Router>
+    </div>
   );
 }
 

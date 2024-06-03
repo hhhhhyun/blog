@@ -1,53 +1,30 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import './WritingPage.css';
 
-const WritingPage = ({ onAdd, onUpdate, currentPost }) => {
-  const [user, setUser] = useState('');
+const WritingPage = () => {
   const [title, setTitle] = useState('');
   const [body, setBody] = useState('');
-  const [showMessage, setShowMessage] = useState(false);
   const navigate = useNavigate();
 
-  useEffect(() => {
-    if (currentPost) {
-      setUser(currentPost.user);
-      setTitle(currentPost.title);
-      setBody(currentPost.body);
-    } else {
-      setUser('');
-      setTitle('');
-      setBody('');
-    }
-  }, [currentPost]);
-
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    if (currentPost) {
-      onUpdate({ ...currentPost, user, title, body });
-    } else {
-      onAdd({ user, title, body });
-    }
-    setShowMessage(true);
-    setTimeout(() => {
-      setShowMessage(false);
+    const response = await fetch('/api/blog/', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${localStorage.getItem('token')}`
+      },
+      body: JSON.stringify({ title, body })
+    });
+    if (response.status === 201) {
       navigate('/postlist');
-    }, 2000);
+    }
   };
 
   return (
     <div className="writing-page">
-      <h2>{currentPost ? 'Edit Post' : '글쓰기'}</h2>
-      {showMessage && <div className="message">저장되었습니다!</div>} {/* 저장 메시지 표시 */}
+      <h2>글쓰기</h2>
       <form onSubmit={handleSubmit}>
-        <div>
-          <input
-            type="text"
-            placeholder="이름을 입력하세요."
-            value={user}
-            onChange={(e) => setUser(e.target.value)}
-          />
-        </div>
         <div>
           <input
             type="text"

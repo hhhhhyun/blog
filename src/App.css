@@ -22,6 +22,10 @@ body {
 .nav-link {
   text-decoration: none;
   font-size: 30px;
+  color: inherit; /* 상속받은 색상을 사용하도록 설정 */
+  background: none;
+  border: none;
+  cursor: pointer;
 }
 
 .content {

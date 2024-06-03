@@ -1,11 +1,24 @@
-import React from 'react';
-import { useLocation } from 'react-router-dom';
+import React, { useEffect, useState } from 'react';
+import { useParams } from 'react-router-dom';
+import apiCall from './api';
 import './WritingDetail.css';
 
-const WritingDetail = ({ writings }) => {
-  const location = useLocation();
-  const id = location.pathname.split('/').pop(); // 경로에서 id 추출
-  const writing = writings.find(writing => writing.id === parseInt(id, 10)); // id에 해당하는 글 찾기
+const WritingDetail = () => {
+  const { id } = useParams();
+  const [writing, setWriting] = useState(null);
+
+  useEffect(() => {
+    const fetchWriting = async () => {
+      try {
+        const response = await apiCall.get(`/blog/${id}/`);
+        setWriting(response.data);
+      } catch (error) {
+        console.error('Error fetching writing', error);
+      }
+    };
+
+    fetchWriting();
+  }, [id]);
 
   if (!writing) {
     return <div className="writing-detail">No writing found.</div>;

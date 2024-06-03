@@ -1,28 +1,32 @@
-import React from 'react';
-import { Link, useNavigate } from 'react-router-dom';
-import './WritingListPage.css';
+import React, { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
 
-const WritingListPage = ({ writings, onDelete, onEdit }) => {
-  const navigate = useNavigate();
+const WritingListPage = () => {
+  const [blogs, setBlogs] = useState([]);
 
-  const handleEdit = (writing) => {
-    onEdit(writing);
-    navigate('/writing');
-  };
+  useEffect(() => {
+    const fetchBlogs = async () => {
+      const response = await fetch('/api/blog/', {
+        headers: {
+          'Authorization': `Bearer ${localStorage.getItem('token')}`
+        }
+      });
+      const data = await response.json();
+      setBlogs(data);
+    };
+
+    fetchBlogs();
+  }, []);
 
   return (
     <div className="writing-list-page">
       <h3>글목록</h3>
       <ul className="post-list">
-        {writings.map(writing => (
-          <li key={writing.id}>
-            <Link to={`/post/${writing.id}`} className="post-link">
-              <strong>{writing.title}</strong> by {writing.user}
+        {blogs.map(blog => (
+          <li key={blog.id}>
+            <Link to={`/post/${blog.id}`} className="post-link">
+              <strong>{blog.title}</strong> by {blog.user}
             </Link>
-            <div className="post-buttons">
-              <button onClick={() => handleEdit(writing)} className="post-edit-button">수정</button>
-              <button onClick={() => onDelete(writing.id)} className="post-delete-button">삭제</button>
-            </div>
           </li>
         ))}
       </ul>
