@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import './App.css';
 import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
 import Introduction from './components/Introduction';
@@ -6,6 +6,7 @@ import WritingPage from './components/WritingPage';
 import WritingListPage from './components/WritingListPage';
 import WritingDetail from './components/WritingDetail';
 import Sign from './components/Sign';
+import PrivateRoute from './PrivateRoute';
 import { getCookie, removeCookie } from './Cookies';
 
 function App() {
@@ -32,9 +33,11 @@ function App() {
             <li>
               <Link to="/" className="nav-link">👩🏻‍💻</Link>
             </li>
-            <li>
-              <Link to="/writing" className="nav-link">📃</Link>
-            </li>
+            {isAuthenticated && (
+              <li>
+                <Link to="/writing" className="nav-link">📃</Link>
+              </li>
+            )}
             <li>
               <Link to="/postlist" className="nav-link">📚</Link>
             </li>
@@ -42,13 +45,15 @@ function App() {
         </nav>
       </header>
       <div className="content">
-        <Routes>
-          <Route path="/login" element={<Sign />} />
-          <Route path="/" element={<Introduction />} />
-          <Route path="/writing" element={<WritingPage />} />
-          <Route path="/postlist" element={<WritingListPage />} />
-          <Route path="/writingdetail/:id" element={<WritingDetail />} />
-        </Routes>
+        <Router>
+          <Routes>
+            <Route path="/login" element={<Sign />} />
+            <Route path="/" element={<Introduction />} />
+            <PrivateRoute path="/writing" element={<WritingPage />} />
+            <Route path="/postlist" element={<WritingListPage />} />
+            <Route path="/writingdetail/:id" element={<WritingDetail />} />
+          </Routes>
+        </Router>
       </div>
     </div>
   );
