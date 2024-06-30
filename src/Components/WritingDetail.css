@@ -1,33 +1,28 @@
 .writing-detail {
-    max-width: 800px;
-    margin: 40px auto;
-    padding: 30px;
-    background: rgba(255, 255, 255, 0.8);
-    border-radius: 15px;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-    font-family: 'Segoe UI', 'Roboto', sans-serif;
-    transition: background 0.3s ease, box-shadow 0.3s ease;
-  }
-  
-  .writing-detail:hover {
-    background: rgba(255, 255, 255, 0.9);
-    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.2);
-  }
-  
-  .writing-detail h3 {
-    text-align: center;
-    margin-bottom: 30px;
-    font-size: 32px;
-    color: #333;
-  }
-  
-  .writing-detail p {
-    font-size: 18px;
-    line-height: 1.6;
-    color: #666;
-  }
-  
-  .writing-detail p strong {
-    color: #333;
-  }
-  
+  max-width: 800px;
+  margin: 40px auto;
+  padding: 30px;
+  background: rgba(255, 255, 255, 0.8);
+  border-radius: 15px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+  font-family: 'Segoe UI', 'Roboto', sans-serif;
+  transition: background 0.3s ease, box-shadow 0.3s ease;
+}
+
+.writing-detail:hover {
+  background: rgba(255, 255, 255, 0.9);
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.2);
+}
+
+.writing-detail h3 {
+  text-align: center;
+  margin-bottom: 30px;
+  font-size: 32px;
+  color: #333;
+}
+
+.writing-detail p {
+  font-size: 18px;
+  line-height: 1.6;
+  color: #333;
+}

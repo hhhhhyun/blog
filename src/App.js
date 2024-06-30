@@ -10,14 +10,13 @@ import { getCookie, removeCookie } from './Cookies';
 
 function App() {
   const isAuthenticated = !!getCookie("token");
-  const [currentPost, setCurrentPost] = useState(null); // Define setCurrentPost state
 
   const handleAuthClick = (event) => {
     event.preventDefault();
     if (isAuthenticated) {
       removeCookie("token");
     }
-    window.location.href = '/login'; // 페이지 이동
+    window.location.href = '/login';
   };
 
   return (
@@ -34,7 +33,7 @@ function App() {
               <Link to="/" className="nav-link">👩🏻‍💻</Link>
             </li>
             <li>
-              <Link to="/writing" className="nav-link" onClick={() => setCurrentPost(null)}>📃</Link>
+              <Link to="/writing" className="nav-link">📃</Link>
             </li>
             <li>
               <Link to="/postlist" className="nav-link">📚</Link>
@@ -46,7 +45,9 @@ function App() {
         <Routes>
           <Route path="/login" element={<Sign />} />
           <Route path="/" element={<Introduction />} />
-          {/* Add other routes here */}
+          <Route path="/writing" element={<WritingPage />} />
+          <Route path="/postlist" element={<WritingListPage />} />
+          <Route path="/writingdetail/:id" element={<WritingDetail />} />
         </Routes>
       </div>
     </div>

@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
+import './WritingListPage.css';
 
 const WritingListPage = () => {
   const [blogs, setBlogs] = useState([]);
@@ -24,7 +25,7 @@ const WritingListPage = () => {
       <ul className="post-list">
         {blogs.map(blog => (
           <li key={blog.id}>
-            <Link to={`/post/${blog.id}`} className="post-link">
+            <Link to={`/writingdetail/${blog.id}`} className="post-link">
               <strong>{blog.title}</strong> by {blog.user}
             </Link>
           </li>

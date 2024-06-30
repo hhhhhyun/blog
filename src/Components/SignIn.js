@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import apiCall from './api';
 import { setCookie } from '../Cookies';
 import './SignIn.css';
+import axios from 'axios';
 
 const SignIn = ({ onLogin }) => {
   const [username, setUsername] = useState('');
@@ -22,12 +23,13 @@ const SignIn = ({ onLogin }) => {
       password: password
     };
     try {
-      const response = await apiCall.post('/dj/login', data);
+      const response = await apiCall.post('/dj/login/', data);
       console.log('로그인 완료', response.data);
       setUsername('');
       setPassword('');
-      setCookie("token", response.data.access);
+      localStorage.setItem("token", response.data.access);
       onLogin();
+      axios.defaults.headers.common['Authorization'] = `Bearer ${response.data.access}`
       window.location.href = '/';
     } catch (error) {
       console.error(error);

@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import './WritingPage.css';
 
 const WritingPage = () => {
   const [title, setTitle] = useState('');

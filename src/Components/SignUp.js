@@ -29,7 +29,7 @@ const SignUp = () => {
       setNickname('');
       setUniversity('');
       setLocation('');
-      setMessage('회원가입이 완료되었습니다. \n로그인 페이지로 이동합니다.');
+      setMessage('회원가입이 완료되었습니다. 로그인 페이지로 이동합니다.');
 
       setTimeout(() => {
         window.location.href = '/login';
@@ -41,9 +41,9 @@ const SignUp = () => {
         if (errors.username) setMessage(errors.username[0]);
         else if (errors.password1) setMessage(errors.password1[0]);
         else if (errors.non_field_errors) setMessage(errors.non_field_errors[0]);
-        else setMessage('회원가입에 실패했습니다. \n다시 시도해주세요.');
+        else setMessage('회원가입에 실패했습니다. 다시 시도해주세요.');
       } else {
-        setMessage('회원가입에 실패했습니다. \n다시 시도해주세요.');
+        setMessage('회원가입에 실패했습니다. 다시 시도해주세요.');
       }
     }
   };

@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import apiCall from './api';
 import './WritingDetail.css';
 
 const WritingDetail = () => {
@@ -10,8 +9,13 @@ const WritingDetail = () => {
   useEffect(() => {
     const fetchWriting = async () => {
       try {
-        const response = await apiCall.get(`/blog/${id}/`);
-        setWriting(response.data);
+        const response = await fetch(`/api/blog/${id}/`, {
+          headers: {
+            'Authorization': `Bearer ${localStorage.getItem('token')}`
+          }
+        });
+        const data = await response.json();
+        setWriting(data);
       } catch (error) {
         console.error('Error fetching writing', error);
       }
